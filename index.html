@@ -2,190 +2,188 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>UDLR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UDLR Game</title>
     <!-- Bootstrap CSS -->
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
+    <!-- Custom CSS -->
     <style>
-      /* Larger grid cells */
-      .grid-cell {
-        border: 1px solid #ccc;
-        width: 100px;
-        height: 100px;
+      body {
+        padding: 20px;
+        font-family: Arial, sans-serif;
+      }
+      .button-container {
         display: flex;
-        flex-wrap: wrap;
-        align-items: center;
+        flex-direction: row;
         justify-content: center;
-        position: relative;
-        cursor: pointer;
+        margin-bottom: 20px;
       }
-      /* Small circles for marks (all green) */
-      .circle {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        margin: 2px;
-        display: inline-block;
-        background-color: green;
+      .button-pair {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 15px;
       }
-      /* Option cells styled similar to grid cells */
-      .mark-option {
-        border: 1px solid #ccc;
+      .audio-btn {
+        margin-bottom: 5px;
+      }
+      .speed-slider {
         width: 100px;
-        height: 100px;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
+      }
+      .grid-container {
+        margin-top: 20px;
+        display: flex;
         justify-content: center;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 150px);
+        grid-gap: 5px;
+      }
+      .cell {
+        width: 150px;
+        height: 150px;
+        border: 2px solid #333;
+        display: block;
+        position: relative;
+      }
+      .marked {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: blue;
+        display: inline-block;
+        margin: 2px;
+      }
+      .number-inputs {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
+      .number-inputs div {
         margin: 0 10px;
       }
-      /* Container for sum inputs per set */
-      #set-sums {
-        margin: 20px 0;
-        text-align: center;
+      .number-inputs input {
+        width: 100px;
+      }
+      #submit-btn {
+        display: block;
+        margin: 20px auto 0;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <!-- Audio Buttons Section (5 sets) -->
-      <div class="row my-3">
-        <!-- Each button now uses a default speed of 0.05 (adjustable via the input) -->
-        <div class="col text-center">
-          <button class="btn btn-primary btn-sm audio-btn" data-btn="1">
-            Play Set 1
+      <!-- Audio Buttons and Speed Sliders -->
+      <div class="button-container">
+        <div class="button-pair">
+          <button class="btn btn-primary audio-btn" data-btn-id="1">
+            Play 1
           </button>
-          <br />
           <input
-            type="number"
-            class="speed-input"
-            data-btn="1"
-            value="0.05"
-            step="0.01"
-            style="width: 60px"
+            type="range"
+            min="0.5"
+            max="2.0"
+            step="0.1"
+            value="1.0"
+            class="speed-slider"
+            data-btn-id="1"
           />
-          Speed
         </div>
-        <div class="col text-center">
-          <button class="btn btn-primary btn-sm audio-btn" data-btn="2">
-            Play Set 2
+        <div class="button-pair">
+          <button class="btn btn-primary audio-btn" data-btn-id="2">
+            Play 2
           </button>
-          <br />
           <input
-            type="number"
-            class="speed-input"
-            data-btn="2"
-            value="0.05"
-            step="0.01"
-            style="width: 60px"
+            type="range"
+            min="0.5"
+            max="2.0"
+            step="0.1"
+            value="1.7"
+            class="speed-slider"
+            data-btn-id="2"
           />
-          Speed
         </div>
-        <div class="col text-center">
-          <button class="btn btn-primary btn-sm audio-btn" data-btn="3">
-            Play Set 3
+        <div class="button-pair">
+          <button class="btn btn-primary audio-btn" data-btn-id="3">
+            Play 3
           </button>
-          <br />
           <input
-            type="number"
-            class="speed-input"
-            data-btn="3"
-            value="0.05"
-            step="0.01"
-            style="width: 60px"
+            type="range"
+            min="0.5"
+            max="2.0"
+            step="0.1"
+            value="1.0"
+            class="speed-slider"
+            data-btn-id="3"
           />
-          Speed
         </div>
-        <div class="col text-center">
-          <button class="btn btn-primary btn-sm audio-btn" data-btn="4">
-            Play Set 4
+        <div class="button-pair">
+          <button class="btn btn-primary audio-btn" data-btn-id="4">
+            Play 4
           </button>
-          <br />
           <input
-            type="number"
-            class="speed-input"
-            data-btn="4"
-            value="0.05"
-            step="0.01"
-            style="width: 60px"
+            type="range"
+            min="0.5"
+            max="2.0"
+            step="0.1"
+            value="1.0"
+            class="speed-slider"
+            data-btn-id="4"
           />
-          Speed
         </div>
-        <div class="col text-center">
-          <button class="btn btn-primary btn-sm audio-btn" data-btn="5">
-            Play Set 5
+        <div class="button-pair">
+          <button class="btn btn-primary audio-btn" data-btn-id="5">
+            Play 5
           </button>
-          <br />
           <input
-            type="number"
-            class="speed-input"
-            data-btn="5"
-            value="0.05"
-            step="0.01"
-            style="width: 60px"
+            type="range"
+            min="0.5"
+            max="2.0"
+            step="0.1"
+            value="2.0"
+            class="speed-slider"
+            data-btn-id="5"
           />
-          Speed
         </div>
       </div>
-      <!-- 4x4 Answer Grid (persistent across sets) -->
-      <div class="row justify-content-center">
-        <div class="col-auto">
-          <div id="grid" class="d-flex flex-wrap" style="width: 420px">
-            <!-- Grid cells generated on page load -->
-          </div>
-        </div>
+
+      <!-- 4x4 Grid -->
+      <div class="grid-container">
+        <div class="grid" id="grid"></div>
       </div>
-      <!-- Option Cells (for not-confident marking) -->
-      <div class="row justify-content-center my-3">
-        <div class="mark-option" id="option-left"></div>
-        <div class="mark-option" id="option-right"></div>
-      </div>
-      <!-- Container for Sum Input for each set -->
-      <div id="set-sums"></div>
+
+      <!-- Sum Inputs -->
+      <div class="number-inputs" id="number-inputs"></div>
+
       <!-- Submit Button -->
-      <div class="row">
-        <div class="col text-right">
-          <button class="btn btn-success" id="submit-btn">Submit</button>
-        </div>
-      </div>
+      <button id="submit-btn" class="btn btn-success">Submit</button>
     </div>
 
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Modal for Showing Results -->
-    <div
-      class="modal fade"
-      id="resultModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="resultModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
+    <!-- Score Modal -->
+    <div class="modal fade" id="scoreModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="resultModalLabel">Game Results</h5>
+            <h5 class="modal-title">Your Score</h5>
             <button
               type="button"
-              class="close"
-              data-dismiss="modal"
+              class="btn-close"
+              data-bs-dismiss="modal"
               aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+            ></button>
           </div>
-          <div class="modal-body" id="result-text">
-            <!-- Results will be injected here -->
-          </div>
+          <div class="modal-body" id="score-display"></div>
           <div class="modal-footer">
             <button
               type="button"
               class="btn btn-secondary"
-              data-dismiss="modal"
+              data-bs-dismiss="modal"
             >
               Close
             </button>
@@ -194,296 +192,218 @@
       </div>
     </div>
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Game Logic -->
     <script>
       $(document).ready(function () {
-        // GLOBAL VARIABLES
-        var gridSize = 4;
-        var audioLoopCount = 10; // number of audio loops per set
-        var activeSet = null; // current set object (if a set is in progress)
-        var setsData = []; // array to hold completed set data
+        // Game state
+        const gameState = {
+          buttons: [
+            {
+              id: 1,
+              speed: 1.0,
+              loops: 10,
+              numbers: [],
+              required_marks: Array.from({ length: 4 }, () => Array(4).fill(0)),
+              user_marks: Array.from({ length: 4 }, () => Array(4).fill(0)),
+            },
+            {
+              id: 2,
+              speed: 1.2,
+              loops: 10,
+              numbers: [],
+              required_marks: Array.from({ length: 4 }, () => Array(4).fill(0)),
+              user_marks: Array.from({ length: 4 }, () => Array(4).fill(0)),
+            },
+            {
+              id: 3,
+              speed: 1.4,
+              loops: 10,
+              numbers: [],
+              required_marks: Array.from({ length: 4 }, () => Array(4).fill(0)),
+              user_marks: Array.from({ length: 4 }, () => Array(4).fill(0)),
+            },
+            {
+              id: 4,
+              speed: 1.6,
+              loops: 10,
+              numbers: [],
+              required_marks: Array.from({ length: 4 }, () => Array(4).fill(0)),
+              user_marks: Array.from({ length: 4 }, () => Array(4).fill(0)),
+            },
+            {
+              id: 5,
+              speed: 1.8,
+              loops: 10,
+              numbers: [],
+              required_marks: Array.from({ length: 4 }, () => Array(4).fill(0)),
+              user_marks: Array.from({ length: 4 }, () => Array(4).fill(0)),
+            },
+          ],
+          currentButtonIndex: null,
+        };
 
-        // Each set records:
-        // {
-        //   setNumber,
-        //   expected: [ {row, col, hand, number (optional)} ... ],
-        //   responses: [ {cellType, row, col} or {cellType, option} ... ],
-        //   spokenNumbers: [ numbers spoken ],
-        //   expectedSum: <computed>
-        // }
-
-        // Helper: generate grid cells (only once on page load)
-        function generateGrid() {
-          $("#grid").empty();
-          for (var r = 0; r < gridSize; r++) {
-            for (var c = 0; c < gridSize; c++) {
-              var cell = $(
-                '<div class="grid-cell" data-row="' +
-                  r +
-                  '" data-col="' +
-                  c +
-                  '"></div>'
-              );
-              $("#grid").append(cell);
-            }
-          }
+        // Initialize 4x4 grid
+        let gridHtml = "";
+        for (let i = 0; i < 16; i++) {
+          const row = Math.floor(i / 4);
+          const col = i % 4;
+          gridHtml += `<div class="cell" data-row="${row}" data-col="${col}"></div>`;
         }
-        // Initialize grid on page load
-        generateGrid();
+        $("#grid").html(gridHtml);
 
-        // When a grid cell is clicked, record a response (all marks are green)
-        $(document).on("click", ".grid-cell", function () {
-          if (!activeSet) {
-            alert(
-              "Please start an audio set by clicking one of the Play buttons."
-            );
-            return;
-          }
-          if (activeSet.responses.length >= activeSet.expected.length) {
-            alert("You have already marked for all audio loops in this set.");
-            return;
-          }
-          var cellRow = parseInt($(this).attr("data-row"));
-          var cellCol = parseInt($(this).attr("data-col"));
-          var response = {
-            cellType: "grid",
-            row: cellRow,
-            col: cellCol,
-          };
-          activeSet.responses.push(response);
-          $(this).append($('<div class="circle"></div>'));
-        });
+        // Generate audio sequence
+        function generateSequence() {
+          const directions = ["UP", "DOWN", "LEFT", "RIGHT"];
+          let row,
+            col,
+            sequence = [];
+          const isRowFirst = Math.random() < 0.5;
 
-        // Option cell click (for not-confident marking)
-        $(".mark-option").click(function () {
-          if (!activeSet) {
-            alert(
-              "Please start an audio set by clicking one of the Play buttons."
-            );
-            return;
+          if (isRowFirst) {
+            row = Math.floor(Math.random() * 4);
+            col = Math.floor(Math.random() * 4);
+            sequence.push(row < 2 ? "UP" : "DOWN");
+            sequence.push(row % 2 === 0 ? "UP" : "DOWN");
+            sequence.push(col < 2 ? "LEFT" : "RIGHT");
+            sequence.push(col % 2 === 0 ? "LEFT" : "RIGHT");
+          } else {
+            col = Math.floor(Math.random() * 4);
+            row = Math.floor(Math.random() * 4);
+            sequence.push(col < 2 ? "LEFT" : "RIGHT");
+            sequence.push(col % 2 === 0 ? "LEFT" : "RIGHT");
+            sequence.push(row < 2 ? "UP" : "DOWN");
+            sequence.push(row % 2 === 0 ? "UP" : "DOWN");
           }
-          if (activeSet.responses.length >= activeSet.expected.length) {
-            alert("You have already marked for all audio loops in this set.");
-            return;
-          }
-          var optionId = $(this).attr("id"); // "option-left" or "option-right"
-          var response = {
-            cellType: "option",
-            option: optionId,
-          };
-          activeSet.responses.push(response);
-          $(this).append($('<div class="circle"></div>'));
-        });
 
-        // playAudioLoop: Plays the audio loops for the current set using the Web Speech API.
-        function playAudioLoop(setNumber, speed) {
-          var currentLoop = 0;
-          function playLoop() {
-            if (currentLoop >= audioLoopCount) {
-              // Wait an extra 3 seconds after the final audio loop before finalizing
-              setTimeout(finalizeCurrentSet, 3000);
-              return;
-            }
-            var directions = [];
-            var rowFirst = Math.random() < 0.5;
-            var rowGroup, rowExact, colGroup, colExact;
-            if (rowFirst) {
-              rowGroup = Math.random() < 0.5 ? "UP" : "DOWN";
-              rowExact = Math.random() < 0.5 ? "UP" : "DOWN";
-              colGroup = Math.random() < 0.5 ? "LEFT" : "RIGHT";
-              colExact = Math.random() < 0.5 ? "LEFT" : "RIGHT";
-              directions = [rowGroup, rowExact, colGroup, colExact];
-            } else {
-              colGroup = Math.random() < 0.5 ? "LEFT" : "RIGHT";
-              colExact = Math.random() < 0.5 ? "LEFT" : "RIGHT";
-              rowGroup = Math.random() < 0.5 ? "UP" : "DOWN";
-              rowExact = Math.random() < 0.5 ? "UP" : "DOWN";
-              directions = [colGroup, colExact, rowGroup, rowExact];
-            }
-            // Fifth word: hand indicator (kept for expected answer)
-            var handIndicator = Math.random() < 0.5 ? "LEFT" : "RIGHT";
-            directions.push(handIndicator);
-            // Sixth word: 70% chance of a one-digit number
-            var numberSpoken = null;
-            if (Math.random() < 0.7) {
-              numberSpoken = Math.floor(Math.random() * 9) + 1;
-              directions.push(numberSpoken.toString());
-            }
-            // Compute expected grid cell from the first 4 words.
-            var expectedRow, expectedCol;
-            if (rowFirst) {
-              var rowOptions = rowGroup === "UP" ? [0, 1] : [2, 3];
-              expectedRow = rowExact === "UP" ? rowOptions[0] : rowOptions[1];
-              var colOptions = colGroup === "LEFT" ? [0, 1] : [2, 3];
-              expectedCol = colExact === "LEFT" ? colOptions[0] : colOptions[1];
-            } else {
-              var colOptions = colGroup === "LEFT" ? [0, 1] : [2, 3];
-              expectedCol = colExact === "LEFT" ? colOptions[0] : colOptions[1];
-              var rowOptions = rowGroup === "UP" ? [0, 1] : [2, 3];
-              expectedRow = rowExact === "UP" ? rowOptions[0] : rowOptions[1];
-            }
-            // Create expected answer object for this loop.
-            var expectedObj = {
-              row: expectedRow,
-              col: expectedCol,
-              hand: handIndicator,
-              number: numberSpoken, // may be null
-            };
-            activeSet.expected.push(expectedObj);
-            if (numberSpoken !== null) {
-              activeSet.spokenNumbers.push(numberSpoken);
-            }
-            // Speak the instructions.
-            var utteranceText = directions.join(" ");
-            var utterance = new SpeechSynthesisUtterance(utteranceText);
-            utterance.rate = speed;
-            speechSynthesis.speak(utterance);
-            currentLoop++;
-            utterance.onend = function () {
-              playLoop();
-            };
+          if (Math.random() < 0.7) {
+            const number = Math.floor(Math.random() * 10);
+            sequence.push(number.toString());
+            return { sequence, row, col, number };
           }
-          playLoop();
+          return { sequence, row, col };
         }
 
-        // When an audio button is clicked, start a new set.
+        // Play audio sequence
+        function playSequence(btn, sequence, callback) {
+          let index = 0;
+          function speakNext() {
+            if (index < sequence.length) {
+              const utterance = new SpeechSynthesisUtterance(sequence[index]);
+              utterance.rate = btn.speed;
+              utterance.onend = speakNext;
+              window.speechSynthesis.speak(utterance);
+              index++;
+            } else if (callback) {
+              callback();
+            }
+          }
+          speakNext();
+        }
+
+        // Handle audio button click
         $(".audio-btn").click(function () {
-          if (activeSet !== null) {
-            alert("Finish the current set before starting a new one.");
-            return;
+          const btnId = parseInt($(this).data("btn-id"));
+          gameState.currentButtonIndex = btnId - 1; // Set currentButtonIndex
+          const btn = gameState.buttons[gameState.currentButtonIndex];
+          $(this).prop("disabled", true);
+          btn.numbers = []; // Reset numbers for this set
+          btn.required_marks = Array.from({ length: 4 }, () =>
+            Array(4).fill(0)
+          ); // Reset required marks
+          btn.user_marks = Array.from({ length: 4 }, () => Array(4).fill(0)); // Reset user marks
+
+          let currentLoop = 0;
+          function playNextLoop() {
+            if (currentLoop < btn.loops) {
+              const seqData = generateSequence();
+              btn.required_marks[seqData.row][seqData.col]++;
+              if (seqData.number !== undefined)
+                btn.numbers.push(seqData.number);
+
+              playSequence(btn, seqData.sequence, () => {
+                if (currentLoop < btn.loops - 1) {
+                  setTimeout(() => {
+                    currentLoop++;
+                    playNextLoop();
+                  }, 1200);
+                } else {
+                  // Add sum input for this set only
+                  const inputHtml = `<div>Sum ${btn.id}: <input type="number" class="number-input" data-btn-id="${btn.id}"></div>`;
+                  $("#number-inputs").append(inputHtml);
+                  $(this).prop("disabled", false);
+                  gameState.currentButtonIndex = null; // Reset currentButtonIndex
+                }
+              });
+            }
           }
-          var setNumber = $(this).data("btn");
-          var speed = parseFloat(
-            $(".speed-input[data-btn='" + setNumber + "']").val()
-          );
-          // Initialize activeSet object.
-          activeSet = {
-            setNumber: setNumber,
-            expected: [],
-            responses: [],
-            spokenNumbers: [],
-          };
-          playAudioLoop(setNumber, speed);
+          playNextLoop(); // Start first loop immediately
         });
 
-        // After an audio set finishes, finalize it (without resetting the grid).
-        function finalizeCurrentSet() {
-          // If the user did not mark for all loops, fill missing responses with null.
-          while (activeSet.responses.length < activeSet.expected.length) {
-            activeSet.responses.push(null);
-          }
-          // Compute expected sum.
-          var expectedSum = activeSet.spokenNumbers.reduce(function (sum, num) {
-            return sum + num;
-          }, 0);
-          activeSet.expectedSum = expectedSum;
-          // Append an input for the user to enter the sum for this set.
-          var sumInputHtml =
-            '<div class="form-group" style="max-width:200px; margin:10px auto;">' +
-            "<label>Set " +
-            activeSet.setNumber +
-            " Sum:</label>" +
-            '<input type="number" class="form-control" id="sum-set-' +
-            activeSet.setNumber +
-            '" placeholder="Enter sum">' +
-            "</div>";
-          $("#set-sums").append(sumInputHtml);
-          // Store the completed set.
-          setsData.push(activeSet);
-          activeSet = null;
-        }
-
-        // When the Submit button is clicked, evaluate all sets.
-        $("#submit-btn").click(function () {
-          if (setsData.length === 0) {
-            alert("No sets have been completed yet.");
+        // Mark cells with multiple circles
+        $(".cell").click(function () {
+          if (gameState.currentButtonIndex === null) {
+            console.log(
+              "No active set. Please start a set by clicking a Play button."
+            );
             return;
           }
-          var resultText = "";
-          // Aggregated scoring for each set.
-          setsData.forEach(function (setData) {
-            // Group expected marks by grid cell.
-            var expectedGrid = {}; // key: "grid_r_c"
-            setData.expected.forEach(function (exp) {
-              var key = "grid_" + exp.row + "_" + exp.col;
-              if (!expectedGrid[key]) {
-                expectedGrid[key] = { total: 0, left: 0, right: 0 };
-              }
-              expectedGrid[key].total++;
-              if (exp.hand === "LEFT") {
-                expectedGrid[key].left++;
-              } else {
-                expectedGrid[key].right++;
-              }
-            });
-            // Group actual grid responses by cell.
-            var actualGrid = {}; // key: "grid_r_c"
-            setData.responses.forEach(function (resp) {
-              if (resp && resp.cellType === "grid") {
-                var key = "grid_" + resp.row + "_" + resp.col;
-                actualGrid[key] = (actualGrid[key] || 0) + 1;
-              }
-            });
-            // Count correct grid marks.
-            var totalCorrectGrid = 0;
-            var leftoverLeft = 0,
-              leftoverRight = 0;
-            for (var key in expectedGrid) {
-              var exp = expectedGrid[key];
-              var act = actualGrid[key] || 0;
-              var cellCorrect = Math.min(exp.total, act);
-              totalCorrectGrid += cellCorrect;
-              var leftover = Math.max(0, exp.total - act);
-              if (exp.total > 0) {
-                leftoverLeft += exp.left * (leftover / exp.total);
-                leftoverRight += exp.right * (leftover / exp.total);
+          const row = parseInt($(this).data("row"));
+          const col = parseInt($(this).data("col"));
+          const currentSet = gameState.buttons[gameState.currentButtonIndex];
+          currentSet.user_marks[row][col]++;
+          $(this).append('<div class="marked"></div>');
+        });
+
+        // Update speech speed
+        $(".speed-slider").on("input", function () {
+          const btnId = parseInt($(this).data("btn-id"));
+          const speed = parseFloat($(this).val());
+          gameState.buttons.find((b) => b.id === btnId).speed = speed;
+        });
+
+        // Submit and calculate score
+        $("#submit-btn").click(function () {
+          let total_correct_marks = 0;
+          let total_possible_marks = 0;
+          let scoreHtml = "";
+
+          gameState.buttons.forEach((btn) => {
+            let correct_marks = 0;
+            let possible_marks = 0;
+            for (let row = 0; row < 4; row++) {
+              for (let col = 0; col < 4; col++) {
+                correct_marks += Math.min(
+                  btn.user_marks[row][col],
+                  btn.required_marks[row][col]
+                );
+                possible_marks += btn.required_marks[row][col];
               }
             }
-            // Count actual option responses.
-            var actualOptionLeft = 0,
-              actualOptionRight = 0;
-            setData.responses.forEach(function (resp) {
-              if (resp && resp.cellType === "option") {
-                if (resp.option === "option-left") {
-                  actualOptionLeft++;
-                }
-                if (resp.option === "option-right") {
-                  actualOptionRight++;
-                }
-              }
-            });
-            var optionLeftCorrect = Math.min(
-              actualOptionLeft,
-              Math.floor(leftoverLeft)
-            );
-            var optionRightCorrect = Math.min(
-              actualOptionRight,
-              Math.floor(leftoverRight)
-            );
-            var totalCorrect =
-              totalCorrectGrid + optionLeftCorrect + optionRightCorrect;
-            var percentCorrect = Math.round(
-              (totalCorrect / audioLoopCount) * 100
-            );
+            total_correct_marks += correct_marks;
+            total_possible_marks += possible_marks;
 
-            var userSumVal = $("#sum-set-" + setData.setNumber).val();
-            var userSum = parseInt(userSumVal);
-            var sumResult =
-              userSum === setData.expectedSum
-                ? "(Correct)"
-                : "(Wrong! Must be: " + setData.expectedSum + ")";
-            resultText +=
-              "<p>Set " +
-              setData.setNumber +
-              ": " +
-              percentCorrect +
-              "% Correct<br>Sum: " +
-              (isNaN(userSum) ? "Not entered" : userSum) +
-              " " +
-              sumResult +
-              "</p><hr>";
+            const userSum =
+              parseInt($(`.number-input[data-btn-id="${btn.id}"]`).val()) || 0;
+            const actualSum = btn.numbers.reduce((a, b) => a + b, 0);
+            const sumFeedback =
+              userSum === actualSum
+                ? "Correct"
+                : `Incorrect, the correct is ${actualSum}`;
+
+            scoreHtml += `
+                        <p>Set ${btn.id}: ${correct_marks}/${possible_marks}</p>
+                        <p>Sum: ${userSum} (${sumFeedback})</p>
+                        <br>
+                    `;
           });
-          $("#result-text").html(resultText);
-          $("#resultModal").modal("show");
+
+          scoreHtml += `<p><strong>Total Correct Marks: ${total_correct_marks} / ${total_possible_marks}</strong></p>`;
+          $("#score-display").html(scoreHtml);
+          new bootstrap.Modal($("#scoreModal")).show();
         });
       });
     </script>
