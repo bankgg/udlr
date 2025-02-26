@@ -283,69 +283,64 @@
               setTimeout(finalizeCurrentSet, 3000);
               return;
             }
-            var delay = currentLoop === 0 ? 3000 : 1000;
-            setTimeout(function () {
-              var directions = [];
-              var rowFirst = Math.random() < 0.5;
-              var rowGroup, rowExact, colGroup, colExact;
-              if (rowFirst) {
-                rowGroup = Math.random() < 0.5 ? "UP" : "DOWN";
-                rowExact = Math.random() < 0.5 ? "UP" : "DOWN";
-                colGroup = Math.random() < 0.5 ? "LEFT" : "RIGHT";
-                colExact = Math.random() < 0.5 ? "LEFT" : "RIGHT";
-                directions = [rowGroup, rowExact, colGroup, colExact];
-              } else {
-                colGroup = Math.random() < 0.5 ? "LEFT" : "RIGHT";
-                colExact = Math.random() < 0.5 ? "LEFT" : "RIGHT";
-                rowGroup = Math.random() < 0.5 ? "UP" : "DOWN";
-                rowExact = Math.random() < 0.5 ? "UP" : "DOWN";
-                directions = [colGroup, colExact, rowGroup, rowExact];
-              }
-              // Fifth word: hand indicator (kept for expected answer)
-              var handIndicator = Math.random() < 0.5 ? "LEFT" : "RIGHT";
-              directions.push(handIndicator);
-              // Sixth word: 70% chance of a one-digit number
-              var numberSpoken = null;
-              if (Math.random() < 0.7) {
-                numberSpoken = Math.floor(Math.random() * 9) + 1;
-                directions.push(numberSpoken.toString());
-              }
-              // Compute expected grid cell from the first 4 words.
-              var expectedRow, expectedCol;
-              if (rowFirst) {
-                var rowOptions = rowGroup === "UP" ? [0, 1] : [2, 3];
-                expectedRow = rowExact === "UP" ? rowOptions[0] : rowOptions[1];
-                var colOptions = colGroup === "LEFT" ? [0, 1] : [2, 3];
-                expectedCol =
-                  colExact === "LEFT" ? colOptions[0] : colOptions[1];
-              } else {
-                var colOptions = colGroup === "LEFT" ? [0, 1] : [2, 3];
-                expectedCol =
-                  colExact === "LEFT" ? colOptions[0] : colOptions[1];
-                var rowOptions = rowGroup === "UP" ? [0, 1] : [2, 3];
-                expectedRow = rowExact === "UP" ? rowOptions[0] : rowOptions[1];
-              }
-              // Create expected answer object for this loop.
-              var expectedObj = {
-                row: expectedRow,
-                col: expectedCol,
-                hand: handIndicator,
-                number: numberSpoken, // may be null
-              };
-              activeSet.expected.push(expectedObj);
-              if (numberSpoken !== null) {
-                activeSet.spokenNumbers.push(numberSpoken);
-              }
-              // Speak the instructions.
-              var utteranceText = directions.join(" ");
-              var utterance = new SpeechSynthesisUtterance(utteranceText);
-              utterance.rate = speed;
-              speechSynthesis.speak(utterance);
-              currentLoop++;
-              utterance.onend = function () {
-                playLoop();
-              };
-            }, delay);
+            var directions = [];
+            var rowFirst = Math.random() < 0.5;
+            var rowGroup, rowExact, colGroup, colExact;
+            if (rowFirst) {
+              rowGroup = Math.random() < 0.5 ? "UP" : "DOWN";
+              rowExact = Math.random() < 0.5 ? "UP" : "DOWN";
+              colGroup = Math.random() < 0.5 ? "LEFT" : "RIGHT";
+              colExact = Math.random() < 0.5 ? "LEFT" : "RIGHT";
+              directions = [rowGroup, rowExact, colGroup, colExact];
+            } else {
+              colGroup = Math.random() < 0.5 ? "LEFT" : "RIGHT";
+              colExact = Math.random() < 0.5 ? "LEFT" : "RIGHT";
+              rowGroup = Math.random() < 0.5 ? "UP" : "DOWN";
+              rowExact = Math.random() < 0.5 ? "UP" : "DOWN";
+              directions = [colGroup, colExact, rowGroup, rowExact];
+            }
+            // Fifth word: hand indicator (kept for expected answer)
+            var handIndicator = Math.random() < 0.5 ? "LEFT" : "RIGHT";
+            directions.push(handIndicator);
+            // Sixth word: 70% chance of a one-digit number
+            var numberSpoken = null;
+            if (Math.random() < 0.7) {
+              numberSpoken = Math.floor(Math.random() * 9) + 1;
+              directions.push(numberSpoken.toString());
+            }
+            // Compute expected grid cell from the first 4 words.
+            var expectedRow, expectedCol;
+            if (rowFirst) {
+              var rowOptions = rowGroup === "UP" ? [0, 1] : [2, 3];
+              expectedRow = rowExact === "UP" ? rowOptions[0] : rowOptions[1];
+              var colOptions = colGroup === "LEFT" ? [0, 1] : [2, 3];
+              expectedCol = colExact === "LEFT" ? colOptions[0] : colOptions[1];
+            } else {
+              var colOptions = colGroup === "LEFT" ? [0, 1] : [2, 3];
+              expectedCol = colExact === "LEFT" ? colOptions[0] : colOptions[1];
+              var rowOptions = rowGroup === "UP" ? [0, 1] : [2, 3];
+              expectedRow = rowExact === "UP" ? rowOptions[0] : rowOptions[1];
+            }
+            // Create expected answer object for this loop.
+            var expectedObj = {
+              row: expectedRow,
+              col: expectedCol,
+              hand: handIndicator,
+              number: numberSpoken, // may be null
+            };
+            activeSet.expected.push(expectedObj);
+            if (numberSpoken !== null) {
+              activeSet.spokenNumbers.push(numberSpoken);
+            }
+            // Speak the instructions.
+            var utteranceText = directions.join(" ");
+            var utterance = new SpeechSynthesisUtterance(utteranceText);
+            utterance.rate = speed;
+            speechSynthesis.speak(utterance);
+            currentLoop++;
+            utterance.onend = function () {
+              playLoop();
+            };
           }
           playLoop();
         }
