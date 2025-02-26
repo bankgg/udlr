@@ -52,35 +52,38 @@
       }
       .grid {
         display: grid;
-        grid-template-columns: repeat(
-          4,
-          1fr
-        ); /* Equal fractions for simplicity */
+        grid-template-columns: repeat(4, 1fr);
         grid-gap: 0.5rem;
-        max-width: 80vw; /* Limits width to 80% of viewport */
-        max-height: 80vh; /* Limits height to 80% of viewport */
-        width: 100%; /* Ensures it fills available space up to max */
-        aspect-ratio: 1 / 1; /* Keeps grid square */
-        margin: 0 auto; /* Centers it */
+        max-width: 80vw;
+        max-height: 80vh;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        margin: 0 auto;
       }
       .cell {
         position: relative;
         background: #fff;
         border: 2px solid #333;
+        overflow: hidden; /* Keeps circles inside */
       }
       .cell::before {
         content: "";
         display: block;
-        padding-top: 100%; /* Maintains square aspect ratio for each cell */
+        padding-top: 100%; /* Maintains square shape */
       }
       .marked {
         width: 20px;
         height: 20px;
         border-radius: 50%;
         background-color: blue;
-        display: inline-block;
-        margin: 2px;
-        position: absolute; /* Allows stacking inside cell */
+        position: absolute;
+        top: 2px; /* Position from top-left corner */
+        left: 2px; /* Starting position */
+        margin: 0; /* Remove margin to avoid shifting */
+        transform: translate(
+          var(--x, 0),
+          var(--y, 0)
+        ); /* Dynamic positioning */
       }
       .number-inputs {
         display: flex;
@@ -433,7 +436,8 @@
         });
 
         // Mark cells with multiple circles
-        $(".cell").click(function () {
+        $(".cell").on("click touchstart", function (e) {
+          e.preventDefault();
           if (gameState.currentButtonIndex === null) {
             console.log(
               "No active set. Please start a set by clicking a Play button."
@@ -443,8 +447,19 @@
           const row = parseInt($(this).data("row"));
           const col = parseInt($(this).data("col"));
           const currentSet = gameState.buttons[gameState.currentButtonIndex];
-          currentSet.user_marks[row][col]++;
-          $(this).append('<div class="marked"></div>');
+          currentSet.user_marks[row][col]++; // Increment mark count
+          const $cell = $(this);
+          $cell.append('<div class="marked"></div>'); // Add new circle
+          const $marks = $cell.find(".marked"); // Get all circles in this cell
+          const size = parseInt($marks.first().css("width") || "20"); // Default to 20px if not rendered yet
+          $marks.each(function (index) {
+            const xPos = (index % 5) * (size + 2); // 5 circles per row, 2px gap
+            const yPos = Math.floor(index / 5) * (size + 2); // New row every 5
+            $(this).css({
+              "--x": `${xPos}px`,
+              "--y": `${yPos}px`,
+            });
+          });
         });
 
         // Update speech speed
