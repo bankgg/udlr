@@ -303,6 +303,8 @@
             sequence.push(row % 2 === 0 ? "UP" : "DOWN");
           }
 
+          sequence.push(Math.random() < 0.5 ? "RIGHT" : "LEFT")
+
           if (Math.random() < 0.7) {
             const number = Math.floor(Math.random() * 9) + 1;
             sequence.push(number.toString());
