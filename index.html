@@ -280,7 +280,7 @@
           }
 
           if (Math.random() < 0.7) {
-            const number = Math.floor(Math.random() * 10);
+            const number = Math.floor(Math.random() * 9) + 1;
             sequence.push(number.toString());
             return { sequence, row, col, number };
           }
@@ -382,14 +382,13 @@
               parseInt($(`.number-input[data-btn-id="${btn.id}"]`).val()) || 0;
             const actualSum = btn.numbers.reduce((a, b) => a + b, 0);
             const sumFeedback =
-              userSum === actualSum
+              actualSum > 0 && userSum === actualSum
                 ? "Correct"
                 : `Incorrect, the correct is ${actualSum}`;
 
             scoreHtml += `
-                        <p>Set ${btn.id}: ${correct_marks}/${possible_marks}</p>
-                        <p>Sum: ${userSum} (${sumFeedback})</p>
-                        <br>
+                        <p>Set ${btn.id}: ${correct_marks}/${possible_marks}
+                        <br>Sum: ${userSum} (${sumFeedback})</p>
                     `;
           });
 
