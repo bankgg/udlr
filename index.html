@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UDLR Game</title>
+    <title>UDLR</title>
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -32,6 +32,13 @@
       }
       .speed-slider {
         width: 100px;
+      }
+      .slider-container {
+        display: flex;
+        align-items: center;
+      }
+      .slider-value {
+        margin-left: 10px;
       }
       .grid-container {
         margin-top: 20px;
@@ -85,71 +92,86 @@
           <button class="btn btn-primary audio-btn" data-btn-id="1">
             Play 1
           </button>
-          <input
-            type="range"
-            min="0.1"
-            max="1.0"
-            step="0.1"
-            value="0.1"
-            class="speed-slider"
-            data-btn-id="1"
-          />
+          <div class="slider-container">
+            <input
+              type="range"
+              min="0.1"
+              max="1.0"
+              step="0.1"
+              value="0.1"
+              class="speed-slider"
+              data-btn-id="1"
+            />
+            <span class="slider-value" data-btn-id="1">0.1</span>
+          </div>
         </div>
         <div class="button-pair">
           <button class="btn btn-primary audio-btn" data-btn-id="2">
             Play 2
           </button>
-          <input
-            type="range"
-            min="0.1"
-            max="1.0"
-            step="0.1"
-            value="0.1"
-            class="speed-slider"
-            data-btn-id="2"
-          />
+          <div class="slider-container">
+            <input
+              type="range"
+              min="0.1"
+              max="1.0"
+              step="0.1"
+              value="0.1"
+              class="speed-slider"
+              data-btn-id="2"
+            />
+            <span class="slider-value" data-btn-id="2">0.1</span>
+          </div>
         </div>
         <div class="button-pair">
           <button class="btn btn-primary audio-btn" data-btn-id="3">
             Play 3
           </button>
-          <input
-            type="range"
-            min="0.1"
-            max="1.0"
-            step="0.1"
-            value="0.5"
-            class="speed-slider"
-            data-btn-id="3"
-          />
+          <div class="slider-container">
+            <input
+              type="range"
+              min="0.1"
+              max="1.0"
+              step="0.1"
+              value="0.5"
+              class="speed-slider"
+              data-btn-id="3"
+            />
+            <span class="slider-value" data-btn-id="3">0.5</span>
+          </div>
         </div>
         <div class="button-pair">
           <button class="btn btn-primary audio-btn" data-btn-id="4">
             Play 4
           </button>
-          <input
-            type="range"
-            min="0.1"
-            max="1.0"
-            step="0.1"
-            value="0.1"
-            class="speed-slider"
-            data-btn-id="4"
-          />
+          <div class="slider-container">
+            <input
+              type="range"
+              min="0.1"
+              max="1.0"
+              step="0.1"
+              value="0.1"
+              class="speed-slider"
+              data-btn-id="4"
+            />
+            <span class="slider-value" data-btn-id="4">0.1</span>
+          </div>
         </div>
         <div class="button-pair">
           <button class="btn btn-primary audio-btn" data-btn-id="5">
             Play 5
           </button>
-          <input
-            type="range"
-            min="0.1"
-            max="1.0"
-            step="0.1"
-            value="0.7"
-            class="speed-slider"
-            data-btn-id="5"
-          />
+          <div class="slider-container">
+            <input
+              type="range"
+              min="0.1"
+              max="1.0"
+              step="0.1"
+              value="0.7"
+              class="speed-slider"
+              data-btn-id="5"
+            />
+            <span class="slider-value" data-btn-id="5">0.7</span>
+          </div>
         </div>
       </div>
 
@@ -355,6 +377,14 @@
           const btnId = parseInt($(this).data("btn-id"));
           const speed = parseFloat($(this).val());
           gameState.buttons.find((b) => b.id === btnId).speed = speed;
+          $(`.slider-value[data-btn-id="${btnId}"]`).text(speed.toFixed(1)); // Update the displayed value
+        });
+
+        // Set initial values for all sliders
+        $(".speed-slider").each(function () {
+          const btnId = parseInt($(this).data("btn-id"));
+          const speed = parseFloat($(this).val());
+          $(`.slider-value[data-btn-id="${btnId}"]`).text(speed);
         });
 
         // Submit and calculate score
