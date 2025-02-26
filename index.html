@@ -14,21 +14,25 @@
       body {
         padding: 20px;
         font-family: Arial, sans-serif;
+        overscroll-behavior: none; /* Prevents pull-to-refresh on mobile */
       }
       .button-container {
         display: flex;
-        flex-direction: row;
+        flex-wrap: wrap; /* Already added in HTML, reinforced here */
         justify-content: center;
-        margin-bottom: 20px;
+        margin-bottom: 2rem;
       }
       .button-pair {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 0 15px;
+        margin: 0.5rem 1rem; /* Relative units */
+        min-width: 100px; /* Ensures buttons don’t shrink too much */
       }
       .audio-btn {
-        margin-bottom: 5px;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem 1rem; /* Larger tap area */
+        font-size: 1rem;
       }
       .speed-slider {
         width: 100px;
@@ -38,24 +42,36 @@
         align-items: center;
       }
       .slider-value {
-        margin-left: 10px;
+        margin-left: 0.5rem;
+        font-size: 0.9rem;
       }
       .grid-container {
-        margin-top: 20px;
+        margin-top: 2rem;
         display: flex;
         justify-content: center;
       }
       .grid {
         display: grid;
-        grid-template-columns: repeat(4, 110px);
-        grid-gap: 5px;
+        grid-template-columns: repeat(
+          4,
+          1fr
+        ); /* Equal fractions for simplicity */
+        grid-gap: 0.5rem;
+        max-width: 80vw; /* Limits width to 80% of viewport */
+        max-height: 80vh; /* Limits height to 80% of viewport */
+        width: 100%; /* Ensures it fills available space up to max */
+        aspect-ratio: 1 / 1; /* Keeps grid square */
+        margin: 0 auto; /* Centers it */
       }
       .cell {
-        width: 110px;
-        height: 110px;
-        border: 2px solid #333;
-        display: block;
         position: relative;
+        background: #fff;
+        border: 2px solid #333;
+      }
+      .cell::before {
+        content: "";
+        display: block;
+        padding-top: 100%; /* Maintains square aspect ratio for each cell */
       }
       .marked {
         width: 20px;
@@ -64,30 +80,77 @@
         background-color: blue;
         display: inline-block;
         margin: 2px;
+        position: absolute; /* Allows stacking inside cell */
       }
       .number-inputs {
         display: flex;
-        flex-direction: row;
-        justify-content: center;
         flex-wrap: wrap;
-        margin-top: 20px;
+        justify-content: center;
+        margin-top: 2rem;
       }
       .number-inputs div {
-        margin: 0 10px;
+        margin: 0.5rem 1rem;
+        font-size: 1rem;
       }
       .number-inputs input {
-        width: 100px;
+        width: 80px;
+        padding: 0.3rem;
       }
       #submit-btn {
         display: block;
-        margin: 20px auto 0;
+        margin: 2rem auto 0;
+        padding: 0.5rem 2rem;
+        font-size: 1rem;
+      }
+
+      @media (min-width: 769px) {
+        .grid {
+          max-width: 600px; /* Fixed cap for desktop */
+          max-height: 600px; /* Ensures it fits most screens */
+        }
+      }
+
+      /* Media Queries for Mobile */
+      @media (max-width: 768px) {
+        .grid {
+          grid-template-columns: repeat(4, minmax(0, 22vw));
+        }
+        .marked {
+          width: 15px;
+          height: 15px;
+        }
+        .audio-btn {
+          font-size: 0.9rem;
+          padding: 0.4rem 0.8rem;
+        }
+        .speed-slider {
+          width: 80px;
+        }
+        .slider-value {
+          font-size: 0.8rem;
+        }
+        .number-inputs input {
+          width: 60px;
+        }
+      }
+      @media (max-width: 480px) {
+        .button-pair {
+          margin: 0.3rem 0.5rem;
+        }
+        .grid {
+          grid-gap: 0.3rem;
+        }
+        .marked {
+          width: 10px;
+          height: 10px;
+        }
       }
     </style>
   </head>
   <body>
     <div class="container">
       <!-- Audio Buttons and Speed Sliders -->
-      <div class="button-container">
+      <div class="button-container d-flex flex-wrap justify-content-center">
         <div class="button-pair">
           <button class="btn btn-primary audio-btn" data-btn-id="1">
             Play 1
@@ -303,7 +366,7 @@
             sequence.push(row % 2 === 0 ? "UP" : "DOWN");
           }
 
-          sequence.push(Math.random() < 0.5 ? "RIGHT" : "LEFT")
+          sequence.push(Math.random() < 0.5 ? "RIGHT" : "LEFT");
 
           if (Math.random() < 0.7) {
             const number = Math.floor(Math.random() * 9) + 1;
